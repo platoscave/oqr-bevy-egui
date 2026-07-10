@@ -96,7 +96,7 @@ fn build_skybox(
         TextureFormat::Rgba8UnormSrgb,
         RenderAssetUsages::RENDER_WORLD,
     );
-    cubemap.reinterpret_stacked_2d_as_array(6);
+    let _ = cubemap.reinterpret_stacked_2d_as_array(6);
     cubemap.texture_view_descriptor = Some(TextureViewDescriptor {
         dimension: Some(TextureViewDimension::Cube),
         ..default()

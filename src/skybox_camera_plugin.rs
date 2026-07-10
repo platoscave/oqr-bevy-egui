@@ -350,13 +350,11 @@ fn restore_entity(
         apply_emissive_state(entity, false, material_query, materials, selected_query);
     } else {
         // Fully restore original emissive and drop the tracking component
-        if let Ok(material_handle) = material_query.get(entity) {
-            if let Some(mut material) = materials.get_mut(&material_handle.0) {
-                if let Ok(original) = original_query.get(entity) {
+        if let Ok(material_handle) = material_query.get(entity)
+            && let Some(mut material) = materials.get_mut(&material_handle.0)
+                && let Ok(original) = original_query.get(entity) {
                     material.emissive = original.0;
                 }
-            }
-        }
         commands.entity(entity).remove::<OriginalEmissive>();
     }
 }
