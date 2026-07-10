@@ -1,3 +1,4 @@
+#![allow(clippy::too_many_arguments)]
 use bevy::prelude::*;
 use serde_json::Value;
 use std::f32::consts::PI;
@@ -138,7 +139,7 @@ pub fn spawn_class(
             Name::new(key.to_owned()),
             Mesh3d(meshes.add(class_mesh().to_bevy(RenderAssetUsages::all()))),
             MeshMaterial3d(
-                materials.add(fadeable_material(color_map.0.get("class").unwrap().clone())),
+                materials.add(fadeable_material(*color_map.0.get("class").unwrap())),
             ),
             Transform::from_xyz(0.0, y, 0.0),
             FlyToOnClick,     // Custom tag to identify clickable objects
@@ -164,7 +165,7 @@ pub fn spawn_class(
                 Name::new("Top Conector"),
                 Mesh3d(meshes.add(Cylinder::new(0.05, 2.0).mesh().resolution(50))),
                 MeshMaterial3d(materials.add(fadeable_material(
-                    color_map.0.get("classBeam").unwrap().clone(),
+                    *color_map.0.get("classBeam").unwrap(),
                 ))),
                 Transform::from_xyz(0.0, 1.0, 0.0),
             ))
@@ -177,7 +178,7 @@ pub fn spawn_class(
                 Name::new("Start Sphere"),
                 Mesh3d(meshes.add(Sphere::new(0.05).mesh())),
                 MeshMaterial3d(materials.add(fadeable_material(
-                    color_map.0.get("classBeam").unwrap().clone(),
+                    *color_map.0.get("classBeam").unwrap(),
                 ))),
                 Transform::from_translation(Vec3::new(0.0, 2.0, 0.0)),
             ))
@@ -192,7 +193,7 @@ pub fn spawn_class(
             HorizontalBeam,
             Mesh3d(meshes.add(Cylinder::new(0.05, 1.0).mesh().resolution(50))),
             MeshMaterial3d(materials.add(fadeable_material(
-                color_map.0.get("classBeam").unwrap().clone(),
+                *color_map.0.get("classBeam").unwrap(),
             ))),
             Transform::from_xyz(0.0, -2.0, 0.0).with_rotation(Quat::from_rotation_z(PI / 2.0)),
         ))
@@ -218,10 +219,9 @@ pub fn spawn_class(
                     anchor: TextAnchor::Center,
                     ..default()
                 },
-                ..default()
             },
             MeshMaterial3d(
-                materials.add(fadeable_material(color_map.0.get("label").unwrap().clone())),
+                materials.add(fadeable_material(*color_map.0.get("label").unwrap())),
             ),
             Transform::from_xyz(0.0, 0.0, 0.32).with_scale(Vec3::splat(0.25)),
         ))
@@ -243,7 +243,7 @@ pub fn spawn_class(
         });
     }
 
-    return parent_ent;
+    parent_ent
 }
 
 pub fn fadeable_material(color: Color) -> StandardMaterial {
@@ -290,7 +290,7 @@ fn class_mesh() -> BevyMesh3d {
     //mesh.to_bevy(RenderAssetUsages::default());
     //mesh.translate(from_xyz(0.0, 0.0, 0.1));
 
-    return mesh;
+    mesh
 }
 
 /*

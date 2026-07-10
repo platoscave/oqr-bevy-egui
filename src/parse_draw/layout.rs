@@ -1,3 +1,4 @@
+#![allow(clippy::too_many_arguments)]
 use bevy::prelude::*;
 use std::collections::HashSet;
 
@@ -52,7 +53,7 @@ pub fn update_subclass_positions(
 fn find_root(entity: Entity, subclass_of: &Query<&SubclassOf>) -> Entity {
     let mut current = entity;
     while let Ok(SubclassOf(parent)) = subclass_of.get(current) {
-        current = parent.clone();
+        current = *parent
     }
     current
 }
@@ -78,7 +79,7 @@ fn layout_subtree(
         return 0.0;
     };
 
-    let is_collapsed = collapsed_query.get(entity).map_or(false, |c| c.0);
+    let is_collapsed = collapsed_query.get(entity).is_ok_and(|c| c.0);
     let has_children = !subclasses.is_empty() && !is_collapsed;
 
     // Only the horizontal beam needs visibility control — it's collapse-aware
@@ -180,7 +181,7 @@ fn subtree_width(
     let Ok(subclasses) = subclasses_query.get(entity) else {
         return 0.0;
     };
-    let is_collapsed = collapsed_query.get(entity).map_or(false, |c| c.0);
+    let is_collapsed = collapsed_query.get(entity).is_ok_and(|c| c.0);
     if subclasses.is_empty() || is_collapsed {
         return 0.0;
     }
@@ -223,7 +224,7 @@ pub fn sync_leaf_visuals(
                         Name::new("Bottom Conector"),
                         Mesh3d(meshes.add(Cylinder::new(0.05, 2.0).mesh().resolution(50))),
                         MeshMaterial3d(materials.add(fadeable_material(
-                            color_map.0.get("classBeam").unwrap().clone(),
+                            *color_map.0.get("classBeam").unwrap(),
                         ))),
                         Transform::from_xyz(0.0, -1.0, 0.0),
                     ))
@@ -235,7 +236,7 @@ pub fn sync_leaf_visuals(
                         Name::new("Collapse Sphere"),
                         Mesh3d(meshes.add(Sphere::new(0.1).mesh())),
                         MeshMaterial3d(materials.add(fadeable_material(
-                            color_map.0.get("unhappy").unwrap().clone(),
+                            *color_map.0.get("unhappy").unwrap(),
                         ))),
                         Transform::from_translation(Vec3::new(0.0, -2.0, 0.0)),
                         HighlightOnHover,

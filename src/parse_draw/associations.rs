@@ -87,7 +87,7 @@ pub fn resolve_pending_associations(
                 AssociationBeam,
                 Mesh3d(meshes.add(Cylinder::new(0.05, 1.0).mesh().resolution(50))),
                 MeshMaterial3d(materials.add(fadeable_material(
-                    pastel_color_from_string(&assoc.title).clone(),
+                    pastel_color_from_string(&assoc.title),
                 ))),
                 Transform::default(),
             ))
@@ -100,7 +100,7 @@ pub fn resolve_pending_associations(
                 Name::new("Start Beam"),
                 Mesh3d(meshes.add(Cylinder::new(0.05, z_offset.abs()).mesh().resolution(50))),
                 MeshMaterial3d(materials.add(fadeable_material(
-                    pastel_color_from_string(&assoc.title).clone(),
+                    pastel_color_from_string(&assoc.title),
                 ))),
                 Transform::from_translation(Vec3::new(0.0, 0.0, z_offset / 2.0))
                     .with_rotation(Quat::from_rotation_x(PI / 2.0)),
@@ -114,7 +114,7 @@ pub fn resolve_pending_associations(
                 Name::new("Start Sphere"),
                 Mesh3d(meshes.add(Sphere::new(0.05).mesh())),
                 MeshMaterial3d(materials.add(fadeable_material(
-                    pastel_color_from_string(&assoc.title).clone(),
+                    pastel_color_from_string(&assoc.title),
                 ))),
                 Transform::from_translation(Vec3::new(0.0, 0.0, z_offset)),
             ))
@@ -127,7 +127,7 @@ pub fn resolve_pending_associations(
                 Name::new("End Beam"),
                 Mesh3d(meshes.add(Cylinder::new(0.05, z_offset.abs()).mesh().resolution(50))),
                 MeshMaterial3d(materials.add(fadeable_material(
-                    pastel_color_from_string(&assoc.title).clone(),
+                    pastel_color_from_string(&assoc.title),
                 ))),
                 Transform::from_translation(Vec3::new(0.0, 0.0, z_offset / 2.0))
                     .with_rotation(Quat::from_rotation_x(PI / 2.0)),
@@ -141,7 +141,7 @@ pub fn resolve_pending_associations(
                 Name::new("End Sphere"),
                 Mesh3d(meshes.add(Sphere::new(0.05).mesh())),
                 MeshMaterial3d(materials.add(fadeable_material(
-                    pastel_color_from_string(&assoc.title).clone(),
+                    pastel_color_from_string(&assoc.title),
                 ))),
                 Transform::from_translation(Vec3::new(0.0, 0.0, z_offset)),
             ))
@@ -154,7 +154,7 @@ pub fn resolve_pending_associations(
                 Name::new("Arrow"),
                 Mesh3d(meshes.add(Cone::new(0.25, 0.6).mesh())),
                 MeshMaterial3d(materials.add(fadeable_material(
-                    pastel_color_from_string(&assoc.title).clone(),
+                    pastel_color_from_string(&assoc.title),
                 ))),
                 Transform::from_translation(Vec3::new(0.0, 0.0, -0.5))
                     .with_rotation(Quat::from_rotation_x(PI / 2.0)),
@@ -172,10 +172,9 @@ pub fn resolve_pending_associations(
                         anchor: TextAnchor::Center,
                         ..default()
                     },
-                    ..default()
                 },
                 MeshMaterial3d(
-                    materials.add(fadeable_material(color_map.0.get("label").unwrap().clone())),
+                    materials.add(fadeable_material(*color_map.0.get("label").unwrap())),
                 ),
                 Transform::default().with_scale(Vec3::splat(0.25)),
             ))
@@ -194,7 +193,7 @@ pub fn resolve_pending_associations(
             .insert(ResolvedAssociation {
                 from_ent,
                 to_ent,
-                assoc_beam_entity: assoc_beam_entity,
+                assoc_beam_entity,
                 start_beam_entity: start_beam_ent,
                 start_sphere_entity: start_sphere_ent,
                 end_beam_entity: end_beam_ent,

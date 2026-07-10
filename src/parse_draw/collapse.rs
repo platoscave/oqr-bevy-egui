@@ -1,8 +1,8 @@
+#![allow(clippy::too_many_arguments)]
 use bevy::prelude::*;
 
 use super::components::*;
 use crate::parse_draw::*;
-
 
 // /////////////////////////////////////////////////////////////////////////////
 // Collapse subclasses on click
@@ -67,19 +67,17 @@ pub fn toggle_collapse_visuals(
         }
 
         // Flip the sphere's own color
-        if let Ok(class_data) = class_data_query.get(entity) {
-            if let Some(sphere_ent) = class_data.collapse_sphere_entity {
-                let color_key = if collapsed.0 { "happy" } else { "unhappy" };
-                if let Some(color) = color_map.0.get(color_key) {
-                    if let Ok(material_handle) = material_handle_query.get(sphere_ent) {
-                        if let Some(mut material) = materials.get_mut(&material_handle.0) {
-                            material.base_color = color.clone();
-                        }
-                    }
-                }
+        if let Ok(class_data) = class_data_query.get(entity)
+            && let Some(sphere_ent) = class_data.collapse_sphere_entity
+        {
+            let color_key = if collapsed.0 { "happy" } else { "unhappy" };
+            if let Some(color) = color_map.0.get(color_key)
+                && let Ok(material_handle) = material_handle_query.get(sphere_ent)
+                && let Some(mut material) = materials.get_mut(&material_handle.0)
+            {
+                material.base_color = *color;
             }
         }
-
     }
 }
 
@@ -160,20 +158,20 @@ pub fn animate_alpha(
         let t = (anim.elapsed / anim.duration).clamp(0.0, 1.0);
         let alpha = anim.from + (anim.to - anim.from) * t;
 
-        if let Ok(material_handle) = material_query.get(entity) {
-            if let Some(mut material) = materials.get_mut(&material_handle.0) {
-                let mut srgba = material.base_color.to_srgba();
-                srgba.alpha = alpha;
-                material.base_color = srgba.into();
+        if let Ok(material_handle) = material_query.get(entity)
+            && let Some(mut material) = materials.get_mut(&material_handle.0)
+        {
+            let mut srgba = material.base_color.to_srgba();
+            srgba.alpha = alpha;
+            material.base_color = srgba.into();
 
-                // Only blend while actually transparent; opaque otherwise
-                // for correct depth sorting/occlusion at rest.
-                material.alpha_mode = if alpha < 1.0 {
-                    AlphaMode::Blend
-                } else {
-                    AlphaMode::Opaque
-                };
-            }
+            // Only blend while actually transparent; opaque otherwise
+            // for correct depth sorting/occlusion at rest.
+            material.alpha_mode = if alpha < 1.0 {
+                AlphaMode::Blend
+            } else {
+                AlphaMode::Opaque
+            };
         }
 
         if t >= 1.0 {

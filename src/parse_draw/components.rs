@@ -19,7 +19,6 @@ pub struct SubclassOf(pub Entity);
 pub struct Subclasses(Vec<Entity>);
 // We need to add this because Vec<Entity> is private
 impl Subclasses {
-
     pub(crate) fn empty() -> Self {
         Subclasses(Vec::new())
     }
@@ -31,13 +30,12 @@ impl Subclasses {
     pub(crate) fn iter(&self) -> impl Iterator<Item = &Entity> {
         self.0.iter()
     }
-
+    
+    #[allow(unused)]
     pub(crate) fn len(&self) -> usize {
         self.0.len()
     }
 }
-
-
 
 // The animate components
 
@@ -81,7 +79,6 @@ pub struct CollapseOnClick {
 // This is our Class component marker (Maybe redundant)
 #[derive(Component, Debug)]
 pub struct Class;
-
 
 // Holds on to horizontal beam, bottom beam, collapse sphere
 // so that we can spawn and despawn them depending on whether or not the class has subslasses

@@ -1,3 +1,5 @@
+#![allow(clippy::too_many_arguments)]
+
 use crate::loading_plugin::*;
 use crate::parse_draw::FlyToOnClick;
 use crate::parse_draw::HighlightOnHover;
@@ -267,14 +269,13 @@ fn highlight_entity(
     original_query: &Query<&OriginalEmissive>,
     selected_query: &Query<(), With<Selected>>,
 ) {
-    if original_query.get(entity).is_err() {
-        if let Ok(material_handle) = material_query.get(entity) {
-            if let Some(material) = materials.get(&material_handle.0) {
-                commands
-                    .entity(entity)
-                    .insert(OriginalEmissive(material.emissive));
-            }
-        }
+    if original_query.get(entity).is_err()
+        && let Ok(material_handle) = material_query.get(entity)
+        && let Some(material) = materials.get(&material_handle.0)
+    {
+        commands
+            .entity(entity)
+            .insert(OriginalEmissive(material.emissive));
     }
 
     apply_emissive_state(
@@ -405,4 +406,3 @@ fn on_hover_end(
         }
     }
 }
-
