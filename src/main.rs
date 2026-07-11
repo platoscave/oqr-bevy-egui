@@ -48,7 +48,6 @@ fn main() {
                     ..default()
                 })
                 // Our stuff
-                
                 .set(AssetPlugin {
                     meta_check: AssetMetaCheck::Never,
                     ..default()

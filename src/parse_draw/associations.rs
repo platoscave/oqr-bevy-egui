@@ -1,4 +1,3 @@
-
 use bevy::prelude::*;
 
 use super::components::*;
@@ -86,9 +85,9 @@ pub fn resolve_pending_associations(
                 Name::new("Association Beam"),
                 AssociationBeam,
                 Mesh3d(meshes.add(Cylinder::new(0.05, 1.0).mesh().resolution(50))),
-                MeshMaterial3d(materials.add(fadeable_material(
-                    pastel_color_from_string(&assoc.title),
-                ))),
+                MeshMaterial3d(
+                    materials.add(fadeable_material(pastel_color_from_string(&assoc.title))),
+                ),
                 Transform::default(),
             ))
             .id();
@@ -99,9 +98,9 @@ pub fn resolve_pending_associations(
             .spawn((
                 Name::new("Start Beam"),
                 Mesh3d(meshes.add(Cylinder::new(0.05, z_offset.abs()).mesh().resolution(50))),
-                MeshMaterial3d(materials.add(fadeable_material(
-                    pastel_color_from_string(&assoc.title),
-                ))),
+                MeshMaterial3d(
+                    materials.add(fadeable_material(pastel_color_from_string(&assoc.title))),
+                ),
                 Transform::from_translation(Vec3::new(0.0, 0.0, z_offset / 2.0))
                     .with_rotation(Quat::from_rotation_x(PI / 2.0)),
             ))
@@ -113,9 +112,9 @@ pub fn resolve_pending_associations(
             .spawn((
                 Name::new("Start Sphere"),
                 Mesh3d(meshes.add(Sphere::new(0.05).mesh())),
-                MeshMaterial3d(materials.add(fadeable_material(
-                    pastel_color_from_string(&assoc.title),
-                ))),
+                MeshMaterial3d(
+                    materials.add(fadeable_material(pastel_color_from_string(&assoc.title))),
+                ),
                 Transform::from_translation(Vec3::new(0.0, 0.0, z_offset)),
             ))
             .id();
@@ -126,9 +125,9 @@ pub fn resolve_pending_associations(
             .spawn((
                 Name::new("End Beam"),
                 Mesh3d(meshes.add(Cylinder::new(0.05, z_offset.abs()).mesh().resolution(50))),
-                MeshMaterial3d(materials.add(fadeable_material(
-                    pastel_color_from_string(&assoc.title),
-                ))),
+                MeshMaterial3d(
+                    materials.add(fadeable_material(pastel_color_from_string(&assoc.title))),
+                ),
                 Transform::from_translation(Vec3::new(0.0, 0.0, z_offset / 2.0))
                     .with_rotation(Quat::from_rotation_x(PI / 2.0)),
             ))
@@ -140,9 +139,9 @@ pub fn resolve_pending_associations(
             .spawn((
                 Name::new("End Sphere"),
                 Mesh3d(meshes.add(Sphere::new(0.05).mesh())),
-                MeshMaterial3d(materials.add(fadeable_material(
-                    pastel_color_from_string(&assoc.title),
-                ))),
+                MeshMaterial3d(
+                    materials.add(fadeable_material(pastel_color_from_string(&assoc.title))),
+                ),
                 Transform::from_translation(Vec3::new(0.0, 0.0, z_offset)),
             ))
             .id();
@@ -153,9 +152,9 @@ pub fn resolve_pending_associations(
             .spawn((
                 Name::new("Arrow"),
                 Mesh3d(meshes.add(Cone::new(0.25, 0.6).mesh())),
-                MeshMaterial3d(materials.add(fadeable_material(
-                    pastel_color_from_string(&assoc.title),
-                ))),
+                MeshMaterial3d(
+                    materials.add(fadeable_material(pastel_color_from_string(&assoc.title))),
+                ),
                 Transform::from_translation(Vec3::new(0.0, 0.0, -0.5))
                     .with_rotation(Quat::from_rotation_x(PI / 2.0)),
             ))
@@ -180,7 +179,6 @@ pub fn resolve_pending_associations(
             ))
             .id();
         commands.entity(from_ent).add_child(name_ent);
-
 
         // Replace PendingAssociation with a persistent ResolvedAssociation
         // so update_association_beams keeps this beam correct every frame.
@@ -250,7 +248,6 @@ pub fn update_association_beams(
         }
     }
 }
-
 
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};

@@ -30,7 +30,6 @@ impl Subclasses {
     pub(crate) fn iter(&self) -> impl Iterator<Item = &Entity> {
         self.0.iter()
     }
-    
     #[allow(unused)]
     pub(crate) fn len(&self) -> usize {
         self.0.len()

@@ -5,7 +5,6 @@ use std::collections::HashSet;
 use super::components::*;
 use crate::parse_draw::*;
 
-
 // /////////////////////////////////////////////////////////////////////////////
 // Whenever the Subclasses relationship changes (added or removed),
 // or a Collapse Sphere is clicked, recalculate the subclass positions.
@@ -191,7 +190,6 @@ fn subtree_width(
         .sum()
 }
 
-
 pub fn sync_leaf_visuals(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
@@ -223,9 +221,10 @@ pub fn sync_leaf_visuals(
                     .spawn((
                         Name::new("Bottom Conector"),
                         Mesh3d(meshes.add(Cylinder::new(0.05, 2.0).mesh().resolution(50))),
-                        MeshMaterial3d(materials.add(fadeable_material(
-                            *color_map.0.get("classBeam").unwrap(),
-                        ))),
+                        MeshMaterial3d(
+                            materials
+                                .add(fadeable_material(*color_map.0.get("classBeam").unwrap())),
+                        ),
                         Transform::from_xyz(0.0, -1.0, 0.0),
                     ))
                     .id();
@@ -235,9 +234,9 @@ pub fn sync_leaf_visuals(
                     .spawn((
                         Name::new("Collapse Sphere"),
                         Mesh3d(meshes.add(Sphere::new(0.1).mesh())),
-                        MeshMaterial3d(materials.add(fadeable_material(
-                            *color_map.0.get("unhappy").unwrap(),
-                        ))),
+                        MeshMaterial3d(
+                            materials.add(fadeable_material(*color_map.0.get("unhappy").unwrap())),
+                        ),
                         Transform::from_translation(Vec3::new(0.0, -2.0, 0.0)),
                         HighlightOnHover,
                         CollapseOnClick {
@@ -308,4 +307,3 @@ pub fn animate_translation(
         }
     }
 }
-

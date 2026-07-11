@@ -1,23 +1,20 @@
-use bevy::prelude::*;
+use crate::*; // for AppState, ColorMap, AssetHandels, ClassValueAsset, etc.
 use bevy::asset::RenderAssetUsages;
-use std::f32::consts::PI;
-use bevy_fontmesh::prelude::*;
-
-use crate::*;  // for AppState, ColorMap, AssetHandels, ClassValueAsset, etc.
 pub use loading_plugin::*;
+use std::f32::consts::PI;
 
-// Our modules, adjacent directories
-mod components;
-mod spawn;
-mod layout;
+// Our modules, adjacent sources
 mod associations;
 mod collapse;
+mod components;
+mod layout;
+mod spawn;
 // Re-export everything
-pub use components::*; // so crate::parse_draw::ResolvedAssociation still works
-use spawn::*;
-use layout::*;
 pub use associations::*;
 use collapse::*;
+pub use components::*; // so crate::parse_draw::ResolvedAssociation still works
+use layout::*;
+use spawn::*;
 
 pub struct ParseDrawPlugin;
 impl Plugin for ParseDrawPlugin {
@@ -50,4 +47,3 @@ impl Plugin for ParseDrawPlugin {
             .add_observer(on_click);
     }
 }
-

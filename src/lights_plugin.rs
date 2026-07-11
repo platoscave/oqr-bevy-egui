@@ -3,19 +3,16 @@ use bevy::prelude::*;
 pub struct LightsPlugin;
 impl Plugin for LightsPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .insert_resource(GlobalAmbientLight {
-                color: Color::WHITE,
-                brightness: 100.0,
-                ..default()
-            })
-            .add_systems(Startup, setup);
+        app.insert_resource(GlobalAmbientLight {
+            color: Color::WHITE,
+            brightness: 100.0,
+            ..default()
+        })
+        .add_systems(Startup, setup);
     }
 }
 
-fn setup(
-    mut commands: Commands,
-) {
+fn setup(mut commands: Commands) {
     // Directional light
     commands.spawn((
         DirectionalLight {

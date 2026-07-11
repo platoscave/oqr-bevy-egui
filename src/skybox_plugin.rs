@@ -1,9 +1,9 @@
+use bevy::asset::RenderAssetUsages;
+use bevy::core_pipeline::Skybox;
 use bevy::prelude::*;
 use bevy::render::render_resource::{
     Extent3d, TextureDimension, TextureFormat, TextureViewDescriptor, TextureViewDimension,
 };
-use bevy::asset::RenderAssetUsages;
-use bevy::core_pipeline::Skybox;
 
 use crate::loading_plugin::AppState;
 

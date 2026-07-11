@@ -6,7 +6,6 @@ use std::f32::consts::PI;
 use super::components::*;
 use crate::parse_draw::*;
 
-
 pub fn parse_draw_classes(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
@@ -138,9 +137,7 @@ pub fn spawn_class(
             Collapsed(false),
             Name::new(key.to_owned()),
             Mesh3d(meshes.add(class_mesh().to_bevy(RenderAssetUsages::all()))),
-            MeshMaterial3d(
-                materials.add(fadeable_material(*color_map.0.get("class").unwrap())),
-            ),
+            MeshMaterial3d(materials.add(fadeable_material(*color_map.0.get("class").unwrap()))),
             Transform::from_xyz(0.0, y, 0.0),
             FlyToOnClick,     // Custom tag to identify clickable objects
             HighlightOnHover, // Custom tag to identify hover highlight objects
@@ -164,9 +161,9 @@ pub fn spawn_class(
             .spawn((
                 Name::new("Top Conector"),
                 Mesh3d(meshes.add(Cylinder::new(0.05, 2.0).mesh().resolution(50))),
-                MeshMaterial3d(materials.add(fadeable_material(
-                    *color_map.0.get("classBeam").unwrap(),
-                ))),
+                MeshMaterial3d(
+                    materials.add(fadeable_material(*color_map.0.get("classBeam").unwrap())),
+                ),
                 Transform::from_xyz(0.0, 1.0, 0.0),
             ))
             .id();
@@ -177,24 +174,24 @@ pub fn spawn_class(
             .spawn((
                 Name::new("Start Sphere"),
                 Mesh3d(meshes.add(Sphere::new(0.05).mesh())),
-                MeshMaterial3d(materials.add(fadeable_material(
-                    *color_map.0.get("classBeam").unwrap(),
-                ))),
+                MeshMaterial3d(
+                    materials.add(fadeable_material(*color_map.0.get("classBeam").unwrap())),
+                ),
                 Transform::from_translation(Vec3::new(0.0, 2.0, 0.0)),
             ))
             .id();
         commands.entity(parent_ent).add_child(top_sphere_ent);
     }
-    
+
     // Spawn Horizontal Beam
     let horizontal_beam_ent = commands
         .spawn((
             Name::new("Horizontal Conector"),
             HorizontalBeam,
             Mesh3d(meshes.add(Cylinder::new(0.05, 1.0).mesh().resolution(50))),
-            MeshMaterial3d(materials.add(fadeable_material(
-                *color_map.0.get("classBeam").unwrap(),
-            ))),
+            MeshMaterial3d(
+                materials.add(fadeable_material(*color_map.0.get("classBeam").unwrap())),
+            ),
             Transform::from_xyz(0.0, -2.0, 0.0).with_rotation(Quat::from_rotation_z(PI / 2.0)),
         ))
         .id();
@@ -220,9 +217,7 @@ pub fn spawn_class(
                     ..default()
                 },
             },
-            MeshMaterial3d(
-                materials.add(fadeable_material(*color_map.0.get("label").unwrap())),
-            ),
+            MeshMaterial3d(materials.add(fadeable_material(*color_map.0.get("label").unwrap()))),
             Transform::from_xyz(0.0, 0.0, 0.32).with_scale(Vec3::splat(0.25)),
         ))
         .id();
@@ -253,8 +248,6 @@ pub fn fadeable_material(color: Color) -> StandardMaterial {
         ..default()
     }
 }
-
-
 // /////////////////////////////////////////////////////////////////////////////
 // Procedural Class mesh, to be replaced by glb import
 // /////////////////////////////////////////////////////////////////////////////
@@ -324,4 +317,3 @@ fn object_mesh() -> BevyMesh3d {
     return mesh;
 }
 */
-
