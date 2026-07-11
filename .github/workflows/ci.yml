@@ -48,7 +48,8 @@ jobs:
       - name: Install alsa and udev
         run: sudo apt-get update; sudo apt-get install g++ pkg-config libx11-dev libasound2-dev libudev-dev libxkbcommon-x11-0 libwayland-dev
       - name: Run doc tests with all features (this also compiles README examples)
-        run: cargo test --doc --all-features
+        # run: cargo test --doc --all-features
+        run: cargo test --all-features
   lint:
     runs-on: ubuntu-latest
     steps:
